@@ -1,8 +1,3 @@
-"""
-Coin recognition, real life application
-task: calculate the value of coins on picture
-"""
-
 import cv2
 import numpy as np
 
