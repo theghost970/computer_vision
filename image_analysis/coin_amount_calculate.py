@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 
 def detect_coins():
-    coins = cv2.imread('../input_image/koruny.jpg', 1)
+    coins = cv2.imread('coins.png', 1)
 
     gray = cv2.cvtColor(coins, cv2.COLOR_BGR2GRAY)
     img = cv2.medianBlur(gray, 7)
@@ -35,46 +35,28 @@ def detect_coins():
             4,
         )
 
-    cv2.imwrite("../output_image/coin_amount/koruny_test_Hough.jpg", coins_detected)
+    cv2.imwrite("coins2.png", coins_detected)
 
     return circles
 
 def calculate_amount():
     koruny = {
-        "1 CZK": {
-            "value": 1,
+        "0.25 AED": {
+            "value": 0.25,
             "radius": 20,
             "ratio": 1,
             "count": 0,
         },
-        "2 CZK": {
-            "value": 2,
-            "radius": 21.5,
-            "ratio": 1.075,
+        "0.5 AED": {
+            "value": 0.5,
+            "radius": 21,
+            "ratio": 1.050,
             "count": 0,
         },
-        "5 CZK": {
-            "value": 5,
-            "radius": 23,
-            "ratio": 1.15,
-            "count": 0,
-        },
-        "10 CZK": {
-            "value": 10,
-            "radius": 24.5,
-            "ratio": 1.225,
-            "count": 0,
-        },
-        "20 CZK": {
-            "value": 20,
-            "radius": 26,
-            "ratio": 1.3,
-            "count": 0,
-        },
-        "50 CZK": {
-            "value": 50,
-            "radius": 27.5,
-            "ratio": 1.375,
+        "1 AED": {
+            "value": 1,
+            "radius": 23.8,
+            "ratio": 1.19,
             "count": 0,
         },
     }
@@ -92,7 +74,7 @@ def calculate_amount():
     tolerance = 0.0375
     total_amount = 0
 
-    coins_circled = cv2.imread('../output_image/coin_amount/koruny_test_Hough.jpg', 1)
+    coins_circled = cv2.imread('coins2.png', 1)
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     for coin in circles[0]:
@@ -107,13 +89,13 @@ def calculate_amount():
                 cv2.putText(coins_circled, str(value), (int(coor_x), int(coor_y)), font, 1,
                             (0, 0, 0), 4)
 
-    print(f"The total amount is {total_amount} CZK")
+    print(f"The total amount is {total_amount} AED")
     for koruna in koruny:
         pieces = koruny[koruna]['count']
         print(f"{koruna} = {pieces}x")
 
 
-    cv2.imwrite("../output_image/coin_amount/koruny_hodnota.jpg", coins_circled)
+    cv2.imwrite("result.png", coins_circled)
 
 
 
